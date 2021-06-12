@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, request
 
 #creamos una var app que construya un objeto desde la clase
 #flask y que tenga como nombre main.py o mejor dicho __name__
@@ -13,5 +13,6 @@ app = Flask(__name__)
 #se ligara con la app para que Flask sepa a la ruta donde 
 #debe ir y que tiene que desplegar....
 def hello():
-    return 'hello World Flask'
+    user_ip = request.remote_addr
+    return f'your IP address is {user_ip}'
 
