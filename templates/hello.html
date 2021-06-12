@@ -16,6 +16,13 @@
 		de la funcion a la que pertenece la ruta -->
 		<a href="{{ url_for('index') }}">ir a inicio</a>
 		{% endif %}
+
+		<ul>
+		{% for to_do in to_dos %}
+			<li>{{ to_do }}</li>
+		{% endfor %}
+		</ul>
+			
 	</header>
 </body>
 </html>

@@ -2,6 +2,9 @@ from flask import Flask, request, make_response, redirect, render_template
 
 app = Flask(__name__)
 
+to_dos = ['to-do 1', 'to-do 2', 'to-do 3']
+
+
 @app.route('/')
 def index():
     user_ip = request.remote_addr
@@ -19,6 +22,13 @@ def index():
 def hello():
     #obtenemos la cookie a través del metodo get
     user_ip = request.cookies.get('user_ip')
-    #al return le enviamos la variable como segundo parametro
-    return render_template('hello.html', user_ip= user_ip)
+
+    #diccionario para pasar muchas variables al template de una
+    context = {
+        'user_ip': user_ip,
+        'to_dos': to_dos,
+    }
+    #los dos ** expanden el diccionario 
+    # context para acceder mas facil en el html
+    return render_template('hello.html', **context)
 
