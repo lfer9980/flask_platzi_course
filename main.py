@@ -1,18 +1,23 @@
-from flask import Flask, request
+from flask import Flask, request, make_response, redirect
 
-#creamos una var app que construya un objeto desde la clase
-#flask y que tenga como nombre main.py o mejor dicho __name__
 app = Flask(__name__)
 
-#crearemos un decorador de python
-#la app tiene una funcion llamada route
-#recibe la ruta de donde buscara el archivo que correra la funcion
 @app.route('/')
-#creamos la primer ruta donde desplegaremos el hello world
-#se hara con una funcion que retorne el hello world
-#se ligara con la app para que Flask sepa a la ruta donde 
-#debe ir y que tiene que desplegar....
-def hello():
+def index():
     user_ip = request.remote_addr
+
+    #la respuesta sera redigirlo a /hello y guardamos eso en una var
+    response = make_response(redirect('/hello'))
+    #creando la cookie como metodo de response
+    #                    nombre    valor
+    response.set_cookie('user_ip', user_ip)
+
+    return response
+
+
+@app.route('/hello')
+def hello():
+    #obtenemos la cookie a través del metodo get
+    user_ip = request.cookies.get('user_ip')
     return f'your IP address is {user_ip}'
 
