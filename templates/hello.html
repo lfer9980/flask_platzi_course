@@ -9,7 +9,13 @@
 <body>
 	<header>
 		<!-- la forma de renderear una variable en jinja2 -->
+		{% if user_ip %}
 		<h1 style="color: #18f319">Hello world Platzi, tu IP es {{ user_ip }}</h1>
+		{% else %}
+		<!-- url_for permite encontrar una ruta especifica, llamando el nombre
+		de la funcion a la que pertenece la ruta -->
+		<a href="{{ url_for('index') }}">ir a inicio</a>
+		{% endif %}
 	</header>
 </body>
 </html>
