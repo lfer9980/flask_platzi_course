@@ -1,28 +1,29 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-	<meta charset="UTF-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Ip address</title>
-</head>
-<body>
+<!-- importamos la macro para poder renderizar la lista todo -->
+{% extends 'base.html' %}
+{% import 'macros_todo.html' as macros %}
+
+<!-- con esto, extendemos lo que viene de base.html
+no lo sobreescribimos-->
+{% block title %} 
+	{{ super() }}
+	Bienvenido 
+{% endblock %}
+
+{% block content %}
 	<header>
-		<!-- la forma de renderear una variable en jinja2 -->
-		{% if user_ip %}
-		<h1 style="color: #18f319">Hello world Platzi, tu IP es {{ user_ip }}</h1>
-		{% else %}
-		<!-- url_for permite encontrar una ruta especifica, llamando el nombre
+	<!-- la forma de renderear una variable en jinja2 -->
+	{% if user_ip %}
+	<h1 style="color: #18f319">Hello world Platzi, tu IP es {{ user_ip }}</h1>
+	{% else %}
+	<!-- url_for permite encontrar una ruta especifica, llamando el nombre
 		de la funcion a la que pertenece la ruta -->
 		<a href="{{ url_for('index') }}">ir a inicio</a>
 		{% endif %}
-
+		
 		<ul>
-		{% for to_do in to_dos %}
-			<li>{{ to_do }}</li>
-		{% endfor %}
+			{% for to_do in to_dos %}
+				{{ macros.render_to_do(to_do) }}
+			{% endfor %}
 		</ul>
-			
 	</header>
-</body>
-</html>
+{% endblock %}
