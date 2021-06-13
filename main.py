@@ -1,6 +1,10 @@
 from flask import Flask, request, make_response, redirect, render_template
+from flask_bootstrap import Bootstrap
 
 app = Flask(__name__)
+#la instancia de bootstrap recibe una app de flask
+bootstrap = Bootstrap(app)
+
 
 to_dos = ['to-do 1', 'to-do 2', 'to-do 3']
 
