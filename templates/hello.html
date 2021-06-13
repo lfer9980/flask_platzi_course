@@ -1,5 +1,5 @@
-<!-- importamos la macro para poder renderizar la lista todo -->
 {% extends 'base.html' %}
+<!-- importamos la macro para poder renderizar la lista todo -->
 {% import 'macros_todo.html' as macros %}
 
 <!-- con esto, extendemos lo que viene de base.html
@@ -10,7 +10,6 @@ no lo sobreescribimos-->
 {% endblock %}
 
 {% block content %}
-	<header>
 	<!-- la forma de renderear una variable en jinja2 -->
 	{% if user_ip %}
 	<h1 style="color: #18f319">Hello world Platzi, tu IP es {{ user_ip }}</h1>
@@ -25,5 +24,4 @@ no lo sobreescribimos-->
 				{{ macros.render_to_do(to_do) }}
 			{% endfor %}
 		</ul>
-	</header>
 {% endblock %}
