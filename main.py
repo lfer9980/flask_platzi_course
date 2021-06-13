@@ -4,6 +4,14 @@ app = Flask(__name__)
 
 to_dos = ['to-do 1', 'to-do 2', 'to-do 3']
 
+@app.errorhandler(404)
+def not_found(error):
+    return render_template('404.html',error=error)
+
+
+@app.errorhandler(500)
+def server_error(error):
+    return render_template('500.html', error=error)
 
 @app.route('/')
 def index():
