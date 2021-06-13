@@ -1,5 +1,7 @@
 <nav>
 	<ul>
+		<!-- agregar un archivo estatico, se hace con dos parametros, dir y filename -->
+		<img src="{{ url_for('static', filename = 'images/platzi.png') }}" alt="Platzi Logo">
 		<li><a href="{{ url_for('index') }}"> ir a inicio </a></li>
 		<li><a href="https://platzi.com"> ir a platzi </a></li>
 	</ul>
