@@ -1,5 +1,5 @@
 from flask import Flask, request, make_response, redirect, render_template, session
-from flask.helpers import url_for
+from flask.helpers import flash, url_for
 from flask_bootstrap import Bootstrap
 from flask_wtf import FlaskForm
 #para importar los fields del form, los traemos directamente de wtforms
@@ -67,6 +67,9 @@ def hello():
         #como el username es una instancia de un stringField, por lo cual debe agregarse .data
         username = login_form.username.data
         session['username'] = username
+
+        flash('nombre de usuario registrado con exito!')
+
         return redirect( url_for('index') )
 
     #los dos ** expanden el diccionario 
