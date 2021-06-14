@@ -12,6 +12,10 @@ no lo sobreescribimos-->
 {% endblock %}
 
 {% block content %}
+	{% if username %}
+		<h3>Bienvenido {{ username | capitalize }}</h3>
+	{% endif %}
+
 	<!-- la forma de renderear una variable en jinja2 -->
 	{% if user_ip %}
 	<h1 style="color: #18f319">Hello world Platzi, tu IP es {{ user_ip }}</h1>

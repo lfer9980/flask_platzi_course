@@ -1,4 +1,5 @@
 from flask import Flask, request, make_response, redirect, render_template, session
+from flask.helpers import url_for
 from flask_bootstrap import Bootstrap
 from flask_wtf import FlaskForm
 #para importar los fields del form, los traemos directamente de wtforms
@@ -43,20 +44,31 @@ def index():
     return response
 
 
-@app.route('/hello')
+@app.route('/hello', methods=['GET', 'POST'])
 def hello():
-    #obtenemos la cookie a través del metodo get
-    user_ip = session.get('user_ip')
-
     #creamos un objeto/instancia para enviar el form al html en el context
     login_form = loginForm()
+
+    #obtenemos la cookie a través del metodo get
+    user_ip = session.get('user_ip')
+    #si existe ya username en session, lo obtenemos
+    username = session.get('username')
 
     #diccionario para pasar muchas variables al template de una
     context = {
         'user_ip': user_ip,
         'to_dos': to_dos,
         'login_form': login_form,
+        'username': username
     }
+
+    #validamos la forma si nos hacen un POST
+    if login_form.validate_on_submit():
+        #como el username es una instancia de un stringField, por lo cual debe agregarse .data
+        username = login_form.username.data
+        session['username'] = username
+        return redirect( url_for('index') )
+
     #los dos ** expanden el diccionario 
     # context para acceder mas facil en el html
     return render_template('hello.html', **context)
