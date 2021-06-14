@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+<!-- importamos bootstrap para hacer render de el form -->
+{% import 'bootstrap/wtf.html' as wtf %}
+
+{% block title %} 
+	{{ super() }}
+	Login
+{% endblock %}
+
+{% block content %}
+<div class="container">
+	<!-- 		<form action="{{ url_for('hello') }}">
+				{{ login_form.username.label}}
+				{{ login_form.username }}
+				{{ login_form.password.label }}
+				{{ login_form.password }}
+				{{ login_form.submit }}
+			</form> -->
+	
+			<!-- con bootstrap -->
+			{{ wtf.quick_form(login_form) }}
+</div>
+{% endblock %}

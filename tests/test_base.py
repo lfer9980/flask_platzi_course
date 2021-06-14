@@ -1,3 +1,4 @@
+from flask.wrappers import Response
 from flask_testing import TestCase
 from flask import current_app, url_for
 
@@ -35,6 +36,17 @@ class MainTest (TestCase):
 			'password': 'fake-password'
 		}
 		response = self.client.post(url_for('hello'), data=fake_form)
-
 		self.assertRedirects(response, url_for('index'))
 
+	def test_auth_blueprint_exists(self):
+		self.assertIn('auth', self.app.blueprints)
+
+	def test_auth_login_get(self):
+		#para acceder a la ruta, se hace con auth.login en vez de solo login
+		response = self.client.get(url_for('auth.login'))
+		self.assert200(response)
+
+	def test_auth_login_render_template(self):
+		#simplemente con hacer el request es suficiente
+		self.client.get(url_for('auth.login'))
+		self.assertTemplateUsed('login.html')
