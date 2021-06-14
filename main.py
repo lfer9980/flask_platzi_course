@@ -1,30 +1,15 @@
-from flask import Flask, request, make_response, redirect, render_template, session
+from flask import request, make_response, redirect, render_template, session
 from flask.helpers import flash, url_for
 from flask_bootstrap import Bootstrap
-from flask_wtf import FlaskForm
-#para importar los fields del form, los traemos directamente de wtforms
-from wtforms.fields import StringField, PasswordField
-#de aqui nos traemos el boton de submit
-from wtforms.fields.simple import SubmitField
-#validador de datos de wtf
-from wtforms.validators import DataRequired
 #traemos una funcionalidad de unitest que se encargara de correr todos los tests desde el dir
 import unittest
+from app import create_app
+from app.forms import loginForm
 
-
-app = Flask(__name__)
-#la instancia de bootstrap recibe una app de flask
-bootstrap = Bootstrap(app)
-
-#configurando LLAVE para session
-app.config['SECRET_KEY'] = 'SUPER SECRETO'
+app = create_app()
 
 to_dos = ['to-do 1', 'to-do 2', 'to-do 3']
 
-class loginForm(FlaskForm):
-    username = StringField('Nombre de usuario', validators=[DataRequired()])
-    password = PasswordField('Password', validators=[DataRequired()])
-    submit = SubmitField('Enviar')
 
 @app.cli.command()
 def test():
