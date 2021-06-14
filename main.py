@@ -8,6 +8,9 @@ from wtforms.fields import StringField, PasswordField
 from wtforms.fields.simple import SubmitField
 #validador de datos de wtf
 from wtforms.validators import DataRequired
+#traemos una funcionalidad de unitest que se encargara de correr todos los tests desde el dir
+import unittest
+
 
 app = Flask(__name__)
 #la instancia de bootstrap recibe una app de flask
@@ -22,6 +25,14 @@ class loginForm(FlaskForm):
     username = StringField('Nombre de usuario', validators=[DataRequired()])
     password = PasswordField('Password', validators=[DataRequired()])
     submit = SubmitField('Enviar')
+
+@app.cli.command()
+def test():
+    # los tests sera todo lo que encuentre unittest 
+    # en la carpeta que estara en la raiz llamada tests
+    tests = unittest.TestLoader().discover('tests')
+    #corremos los tests con unittests
+    unittest.TextTestRunner().run(tests)
 
 @app.errorhandler(404)
 def not_found(error):
