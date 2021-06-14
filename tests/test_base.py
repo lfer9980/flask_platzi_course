@@ -1,4 +1,3 @@
-from flask.wrappers import Response
 from flask_testing import TestCase
 from flask import current_app, url_for
 
