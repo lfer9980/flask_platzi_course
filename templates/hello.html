@@ -1,6 +1,8 @@
 {% extends 'base.html' %}
 <!-- importamos la macro para poder renderizar la lista todo -->
 {% import 'macros_todo.html' as macros %}
+<!-- importamos bootstrap para hacer render de el form -->
+{% import 'bootstrap/wtf.html' as wtf %}
 
 <!-- con esto, extendemos lo que viene de base.html
 no lo sobreescribimos-->
@@ -17,7 +19,20 @@ no lo sobreescribimos-->
 	<!-- url_for permite encontrar una ruta especifica, llamando el nombre
 		de la funcion a la que pertenece la ruta -->
 		<a href="{{ url_for('index') }}">ir a inicio</a>
-		{% endif %}
+	{% endif %}
+
+	<div class="container">
+<!-- 		<form action="{{ url_for('hello') }}">
+			{{ login_form.username.label}}
+			{{ login_form.username }}
+			{{ login_form.password.label }}
+			{{ login_form.password }}
+			{{ login_form.submit }}
+		</form> -->
+
+		<!-- con bootstrap -->
+		{{ wtf.quick_form(login_form) }}
+	</div>
 		
 		<ul>
 			{% for to_do in to_dos %}
