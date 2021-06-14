@@ -1,10 +1,12 @@
-from flask import Flask, request, make_response, redirect, render_template
+from flask import Flask, request, make_response, redirect, render_template, session
 from flask_bootstrap import Bootstrap
 
 app = Flask(__name__)
 #la instancia de bootstrap recibe una app de flask
 bootstrap = Bootstrap(app)
 
+#configurando LLAVE para session
+app.config['SECRET_KEY'] = 'SUPER SECRETO'
 
 to_dos = ['to-do 1', 'to-do 2', 'to-do 3']
 
@@ -23,9 +25,8 @@ def index():
 
     #la respuesta sera redigirlo a /hello y guardamos eso en una var
     response = make_response(redirect('/hello'))
-    #creando la cookie como metodo de response
-    #                    nombre    valor
-    response.set_cookie('user_ip', user_ip)
+    #guardando la ip en session para que sea seguro
+    session['user_ip'] = user_ip
 
     return response
 
@@ -33,7 +34,7 @@ def index():
 @app.route('/hello')
 def hello():
     #obtenemos la cookie a través del metodo get
-    user_ip = request.cookies.get('user_ip')
+    user_ip = session.get('user_ip')
 
     #diccionario para pasar muchas variables al template de una
     context = {
