@@ -40,10 +40,8 @@ def index():
     return response
 
 
-@app.route('/hello', methods=['GET', 'POST'])
+@app.route('/hello', methods=['GET'])
 def hello():
-    #creamos un objeto/instancia para enviar el form al html en el context
-    login_form = loginForm()
 
     #obtenemos la cookie a través del metodo get
     user_ip = session.get('user_ip')
@@ -54,19 +52,9 @@ def hello():
     context = {
         'user_ip': user_ip,
         'to_dos': to_dos,
-        'login_form': login_form,
         'username': username
     }
 
-    #validamos la forma si nos hacen un POST
-    if login_form.validate_on_submit():
-        #como el username es una instancia de un stringField, por lo cual debe agregarse .data
-        username = login_form.username.data
-        session['username'] = username
-
-        flash('nombre de usuario registrado con exito!')
-
-        return redirect( url_for('index') )
 
     #los dos ** expanden el diccionario 
     # context para acceder mas facil en el html
