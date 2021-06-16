@@ -5,10 +5,9 @@ from flask_bootstrap import Bootstrap
 import unittest
 from app import create_app
 from app.forms import loginForm
+from app.firestore_service import get_users, get_to_dos
 
 app = create_app()
-
-to_dos = ['to-do 1', 'to-do 2', 'to-do 3']
 
 
 @app.cli.command()
@@ -51,10 +50,15 @@ def hello():
     #diccionario para pasar muchas variables al template de una
     context = {
         'user_ip': user_ip,
-        'to_dos': to_dos,
+        'to_dos': get_to_dos(user_id=username),
         'username': username
     }
 
+    #traemos la lista de usuarios
+    users = get_users()
+    for user in users:
+        print(user.id)
+        print(user.to_dict()['password'])
 
     #los dos ** expanden el diccionario 
     # context para acceder mas facil en el html

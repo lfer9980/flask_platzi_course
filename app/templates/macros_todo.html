@@ -1,3 +1,4 @@
 {% macro render_to_do(to_do) %}
-	<li>Descripción: {{ to_do }}</li>
+<!-- para que se vea el todo como tal en el frontend, debemos convertir a dictionary -->
+	<li>Descripción: {{ to_do.to_dict().description }}</li>
 {% endmacro %}
