@@ -6,8 +6,8 @@ import unittest
 
 from flask_login import login_required, current_user
 from app import create_app
-from app.forms import TodoForm
-from app.firestore_service import get_users, get_to_dos, put_to_dos
+from app.forms import *
+from app.firestore_service import *
 
 app = create_app()
 
@@ -51,6 +51,8 @@ def hello():
     username = current_user.id
 
     todo_form = TodoForm()
+    delete_form = DeleteTodoForm()
+    update_form = UpdateTodoForm()
 
     #diccionario para pasar muchas variables al template de una
     context = {
@@ -58,6 +60,8 @@ def hello():
         'to_dos': get_to_dos(user_id=username),
         'username': username,
         'todo_form': todo_form,
+        'delete_form': delete_form,
+        'update_form': update_form,
     }
 
     if todo_form.validate_on_submit():
@@ -70,3 +74,20 @@ def hello():
     #los dos ** expanden el diccionario 
     # context para acceder mas facil en el html
     return render_template('hello.html', **context)
+
+
+#esto es una ruta dinamica, cambian de acuerdo al id del todo
+@app.route('/todos/delete/<todo_id>', methods=['POST'])
+def delete(todo_id):
+    user_id = current_user.id
+    delete_todo(user_id=user_id,todo_id=todo_id)
+
+    return redirect(url_for('hello'))
+
+
+@app.route('/todos/update/<todo_id>/<int:done>', methods=['POST'])
+def update(todo_id, done):
+    user_id = current_user.id
+    update_todo(user_id=user_id,todo_id=todo_id, done=done)
+
+    return redirect(url_for('hello'))
