@@ -3,6 +3,8 @@ from flask.helpers import flash, url_for
 from flask_bootstrap import Bootstrap
 #traemos una funcionalidad de unitest que se encargara de correr todos los tests desde el dir
 import unittest
+
+from flask_login.utils import login_required
 from app import create_app
 from app.forms import loginForm
 from app.firestore_service import get_users, get_to_dos
@@ -40,6 +42,7 @@ def index():
 
 
 @app.route('/hello', methods=['GET'])
+@login_required
 def hello():
 
     #obtenemos la cookie a través del metodo get
@@ -54,11 +57,6 @@ def hello():
         'username': username
     }
 
-    #traemos la lista de usuarios
-    users = get_users()
-    for user in users:
-        print(user.id)
-        print(user.to_dict()['password'])
 
     #los dos ** expanden el diccionario 
     # context para acceder mas facil en el html

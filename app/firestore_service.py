@@ -8,13 +8,16 @@ firebase_admin.initialize_app(credential)
 #nueva instancia de servicio firestore
 db = firestore.client()
 
+
 # implementando los metodos que usaremos en firestore
 
 #con este metodo obtendremos lo que tengamos en la coleccion de usuarios
 def get_users():
 	return db.collection('users').get()
 
-#
+def get_user(user_id):
+	return db.collection('users').document(user_id).get()
+
 def get_to_dos(user_id):
 	return db.collection('users').\
 	document(user_id).\
