@@ -12,7 +12,7 @@ login_handler = LoginManager()
 #definimos la ruta donde presentaremos el login
 login_handler.login_view = 'auth.login'
 
-@login_handler.user_loader()
+@login_handler.user_loader
 def load_user(username):
 	return UserModel.query(username)
 

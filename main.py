@@ -4,7 +4,7 @@ from flask_bootstrap import Bootstrap
 #traemos una funcionalidad de unitest que se encargara de correr todos los tests desde el dir
 import unittest
 
-from flask_login.utils import login_required
+from flask_login import login_required, current_user
 from app import create_app
 from app.forms import loginForm
 from app.firestore_service import get_users, get_to_dos
@@ -48,7 +48,7 @@ def hello():
     #obtenemos la cookie a través del metodo get
     user_ip = session.get('user_ip')
     #si existe ya username en session, lo obtenemos
-    username = session.get('username')
+    username = current_user.id
 
     #diccionario para pasar muchas variables al template de una
     context = {
