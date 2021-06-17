@@ -20,11 +20,15 @@ no lo sobreescribimos-->
 	{% if user_ip %}
 	<h1 style="color: #18f319">Hello world Platzi, tu IP es {{ user_ip }}</h1>
 	{% else %}
-	<!-- url_for permite encontrar una ruta especifica, llamando el nombre
-		de la funcion a la que pertenece la ruta -->
 		<a href="{{ url_for('index') }}">ir a inicio</a>
 	{% endif %}
 	
+	<div class="container"> 
+		<h2>Crea tus tareas aqui</h2>
+
+		{{ wtf.quick_form(todo_form) }}
+	</div>
+
 		<ul>
 			{% for to_do in to_dos %}
 				{{ macros.render_to_do(to_do) }}

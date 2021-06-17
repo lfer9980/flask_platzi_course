@@ -22,8 +22,11 @@ def put_user(user_data):
 	user_ref = db.collection('users').document(user_data.username)
 	user_ref.set({ 'password': user_data.password })
 
-
 def get_to_dos(user_id):
 	return db.collection('users').\
 	document(user_id).\
 	collection('todos').get()
+
+def put_to_dos(user_id, description):
+	todos_collection_ref = db.collection('users').document(user_id).collection('todos')
+	todos_collection_ref.add({'description': description})

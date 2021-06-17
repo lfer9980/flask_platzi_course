@@ -6,8 +6,8 @@ import unittest
 
 from flask_login import login_required, current_user
 from app import create_app
-from app.forms import loginForm
-from app.firestore_service import get_users, get_to_dos
+from app.forms import TodoForm
+from app.firestore_service import get_users, get_to_dos, put_to_dos
 
 app = create_app()
 
@@ -41,7 +41,7 @@ def index():
     return response
 
 
-@app.route('/hello', methods=['GET'])
+@app.route('/hello', methods=['GET', 'POST'])
 @login_required
 def hello():
 
@@ -50,15 +50,23 @@ def hello():
     #si existe ya username en session, lo obtenemos
     username = current_user.id
 
+    todo_form = TodoForm()
+
     #diccionario para pasar muchas variables al template de una
     context = {
         'user_ip': user_ip,
         'to_dos': get_to_dos(user_id=username),
-        'username': username
+        'username': username,
+        'todo_form': todo_form,
     }
+
+    if todo_form.validate_on_submit():
+        put_to_dos(user_id=username, description=todo_form.description.data)
+        flash('Todo added successful!')
+
+        return redirect(url_for('hello'))
 
 
     #los dos ** expanden el diccionario 
     # context para acceder mas facil en el html
     return render_template('hello.html', **context)
-
